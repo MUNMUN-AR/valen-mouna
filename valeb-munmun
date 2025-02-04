@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Will You Be My Valentine, Mouna?</title>
+  <style>
+    /* -------------------- General Page Styles -------------------- */
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      background-color: #ffcccb; /* Soft pink background */
+      background-image: url('https://www.transparenttextures.com/patterns/pink-floral.png');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      position: relative;
+    }
+    
+    h1 {
+      color: #ff1493; /* Deep pink */
+      font-size: 3rem;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .heart {
+      color: #1e90ff; /* Blue heart */
+      font-size: 3rem;
+      margin-left: 10px;
+    }
+    
+    /* -------------------- Candle and Sparks -------------------- */
+    .candle-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      position: relative;
+      height: 200px;
+    }
+    
+    .candle {
+      width: 20px;
+      height: 100px;
+      background: linear-gradient(to bottom, #fff, #f0f0f0);
+      border-radius: 10px 10px 0 0;
+      position: relative;
+      margin: 0 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    .flame {
+      width: 10px;
+      height: 30px;
+      background: linear-gradient(to bottom, #1e90ff, #00bfff, #4169e1);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      position: absolute;
+      top: -35px;
+      left: 50%;
+      transform: translateX(-50%);
+      filter: blur(2px);
+      animation: flicker 0.1s infinite alternate;
+    }
+    
+    @keyframes flicker {
+      0% { transform: translateX(-50%) scale(1); }
+      100% { transform: translateX(-50%) scale(1.1); }
+    }
+    
+    .sparks {
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 10px;
+    }
+    
+    .spark {
+      width: 2px;
+      height: 2px;
+      background: #1e90ff;
+      border-radius: 50%;
+      position: absolute;
+      animation: spark 1s infinite ease-out;
+    }
+    
+    @keyframes spark {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-20px) scale(0.5); opacity: 0; }
+    }
+    
+    .buttons {
+      margin-top: 20px;
+    }
+    
+    button {
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      margin: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    #yesButton {
+      background-color: #32cd32; /* Lime green */
+      color: white;
+    }
+    
+    #noButton {
+      background-color: #ff4500; /* Orange red */
+      color: white;
+    }
+    
+    .message {
+      font-size: 1.5rem;
+      color: #ff1493;
+      text-align: center;
+      margin-top: 20px;
+    }
+    
+    /* -------------------- Falling Flowers Animation -------------------- */
+    .falling-flower {
+      position: absolute;
+      top: -50px;
+      pointer-events: none;
+      z-index: 2;
+      animation-name: fall;
+      animation-timing-function: linear;
+    }
+    
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+    
+    /* Flower structure for falling flowers */
+    .flower {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .flower .petal {
+      position: absolute;
+      width: 50%;
+      height: 50%;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+    }
+    
+    /* Default (pink) petals */
+    .flower .petal.petal1 {
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      background: radial-gradient(circle, #ff69b4, #ff1493);
+    }
+    .flower .petal.petal2 {
+      top: 50%; left: 100%;
+      transform: translate(-100%, -50%);
+      background: radial-gradient(circle, #ffb6c1, #ff69b4);
+    }
+    .flower .petal.petal3 {
+      top: 100%; left: 50%;
+      transform: translate(-50%, -100%);
+      background: radial-gradient(circle, #ff1493, #ff00ff);
+    }
+    .flower .petal.petal4 {
+      top: 50%; left: 0;
+      transform: translate(0, -50%);
+      background: radial-gradient(circle, #ff00ff, #ff1493);
+    }
+    
+    /* Default flower center */
+    .flower .center {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 30%;
+      height: 30%;
+      background: radial-gradient(circle, #ffff00, #ffd700);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 10px rgba(255, 255, 0, 0.9);
+    }
+    
+    /* Blue flower variant */
+    .blue-flower .petal.petal1 {
+      background: radial-gradient(circle, #87CEFA, #1E90FF);
+    }
+    .blue-flower .petal.petal2 {
+      background: radial-gradient(circle, #B0E0E6, #4682B4);
+    }
+    .blue-flower .petal.petal3 {
+      background: radial-gradient(circle, #1E90FF, #0000FF);
+    }
+    .blue-flower .petal.petal4 {
+      background: radial-gradient(circle, #6495ED, #4169E1);
+    }
+    .blue-flower .center {
+      background: radial-gradient(circle, #ADD8E6, #0000FF);
+      box-shadow: 0 0 10px rgba(173, 216, 230, 0.9);
+    }
+    
+    /* -------------------- Animated Sunflower Field (CSS/HTML Only) -------------------- */
+    .sunflower-field {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 150px;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    
+    /* Define a composite animation that gently moves the entire sunflower */
+    @keyframes sunflowerMotion {
+      0%   { transform: translate(0, 0) rotate(0deg); }
+      25%  { transform: translate(5px, 10px) rotate(3deg); }
+      50%  { transform: translate(10px, 0) rotate(0deg); }
+      75%  { transform: translate(5px, -10px) rotate(-3deg); }
+      100% { transform: translate(0, 0) rotate(0deg); }
+    }
+    
+    /* Each sunflower */
+    .sunflower {
+      position: absolute;
+      bottom: 0;
+      width: 50px;
+      height: 80px;
+      /* Apply the composite animation */
+      animation: sunflowerMotion 6s infinite ease-in-out;
+    }
+    
+    /* Stem styling */
+    .sunflower .stem {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 50px;
+      background: #228B22;
+      border-radius: 2px;
+      /* A gentle sway can also be added here if desired */
+    }
+    
+    /* Sunflower head styling */
+    .sunflower .sunflower-head {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #FFD700;
+      box-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
+      position: relative;
+    }
+    
+    /* Four petals for the sunflower head */
+    .sunflower .sunflower-head .petal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 14px;
+      height: 28px;
+      background: #FF8C00;
+      border-radius: 7px;
+      transform-origin: 50% 100%;
+    }
+    
+    .sunflower .sunflower-head .petal.p1 { transform: translate(-50%, -100%) rotate(0deg); }
+    .sunflower .sunflower-head .petal.p2 { transform: translate(-50%, -100%) rotate(90deg); }
+    .sunflower .sunflower-head .petal.p3 { transform: translate(-50%, -100%) rotate(180deg); }
+    .sunflower .sunflower-head .petal.p4 { transform: translate(-50%, -100%) rotate(270deg); }
+    
+    /* Sunflower center */
+    .sunflower .sunflower-head .center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 12px;
+      height: 12px;
+      background: #8B4513;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: inset 0 0 3px rgba(0,0,0,0.5);
+    }
+  </style>
+</head>
+<body>
+  <h1>
+    Will You Be My Valentine, Mouna?<span class="heart">❤️</span>
+  </h1>
+  
+  <div class="candle-container">
+    <!-- Multiple Candles with Blue Flames -->
+    <div class="candle">
+      <div class="flame"></div>
+      <div class="sparks">
+        <div class="spark" style="left: 0; animation-delay: 0s;"></div>
+        <div class="spark" style="left: 5px; animation-delay: 0.2s;"></div>
+        <div class="spark" style="left: -5px; animation-delay: 0.4s;"></div>
+      </div>
+    </div>
+    <div class="candle">
+      <div class="flame"></div>
+      <div class="sparks">
+        <div class="spark" style="left: 0; animation-delay: 0s;"></div>
+        <div class="spark" style="left: 5px; animation-delay: 0.2s;"></div>
+        <div class="spark" style="left: -5px; animation-delay: 0.4s;"></div>
+      </div>
+    </div>
+    <div class="candle">
+      <div class="flame"></div>
+      <div class="sparks">
+        <div class="spark" style="left: 0; animation-delay: 0s;"></div>
+        <div class="spark" style="left: 5px; animation-delay: 0.2s;"></div>
+        <div class="spark" style="left: -5px; animation-delay: 0.4s;"></div>
+      </div>
+    </div>
+    <div class="candle">
+      <div class="flame"></div>
+      <div class="sparks">
+        <div class="spark" style="left: 0; animation-delay: 0s;"></div>
+        <div class="spark" style="left: 5px; animation-delay: 0.2s;"></div>
+        <div class="spark" style="left: -5px; animation-delay: 0.4s;"></div>
+      </div>
+    </div>
+    <div class="candle">
+      <div class="flame"></div>
+      <div class="sparks">
+        <div class="spark" style="left: 0; animation-delay: 0s;"></div>
+        <div class="spark" style="left: 5px; animation-delay: 0.2s;"></div>
+        <div class="spark" style="left: -5px; animation-delay: 0.4s;"></div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="buttons">
+    <button id="yesButton">Yes</button>
+    <button id="noButton">No</button>
+  </div>
+  
+  <div id="messageContainer" class="message"></div>
+  
+  <!-- Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  
+  <!-- Background Music -->
+  <audio id="backgroundMusic" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+  
+  <!-- Firecracker Sound -->
+  <audio id="firecrackerSound">
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+  
+  <script>
+    // Message Handling
+    const messageContainer = document.getElementById('messageContainer');
+    const noButton = document.getElementById('noButton');
+    const yesButton = document.getElementById('yesButton');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    const firecrackerSound = document.getElementById('firecrackerSound');
+    let noClickCount = 0;
+    
+    yesButton.addEventListener('click', () => {
+      messageContainer.textContent = "Good Girl!";
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+      backgroundMusic.pause();
+      firecrackerSound.play();
+    });
+    
+    noButton.addEventListener('click', () => {
+      noClickCount++;
+      if (noClickCount === 1) {
+        noButton.textContent = "Are you sure?";
+      } else if (noClickCount === 2) {
+        noButton.textContent = "Baraka mn lbsala!";
+      } else {
+        noButton.style.display = 'none';
+        yesButton.style.transform = 'scale(1.5)';
+        messageContainer.textContent = "L9lawi!";
+      }
+    });
+    
+    // Falling Flowers Animation (Pure CSS/HTML)
+    function createFallingFlower() {
+      const flower = document.createElement('div');
+      flower.classList.add('falling-flower');
+      
+      // Randomly assign blue variant (50% chance)
+      if (Math.random() < 0.5) {
+        flower.classList.add('blue-flower');
+      }
+      
+      // Random size between 30px and 50px
+      const size = Math.random() * 20 + 30;
+      flower.style.width = size + 'px';
+      flower.style.height = size + 'px';
+      
+      // Random horizontal position (with overflow)
+      const posX = Math.random() * 120 - 10;
+      flower.style.left = posX + '%';
+      
+      // Random animation duration between 8s and 15s
+      const duration = Math.random() * 7 + 8;
+      flower.style.animationDuration = duration + 's';
+      
+      // Random delay
+      const delay = Math.random() * 5;
+      flower.style.animationDelay = delay + 's';
+      
+      // Inner HTML structure for the flower (4 petals and a center)
+      flower.innerHTML = `
+        <div class="flower">
+          <div class="petal petal1"></div>
+          <div class="petal petal2"></div>
+          <div class="petal petal3"></div>
+          <div class="petal petal4"></div>
+          <div class="center"></div>
+        </div>
+      `;
+      
+      document.body.appendChild(flower);
+      flower.addEventListener('animationend', () => {
+        flower.remove();
+      });
+    }
+    
+    // Create falling flowers every 500ms
+    setInterval(createFallingFlower, 500);
+    
+    // Start background music on user interaction if paused
+    window.addEventListener('click', () => {
+      if (backgroundMusic.paused) {
+        backgroundMusic.play();
+      }
+    });
+  </script>
+  
+  <!-- -------------------- Animated Sunflower Field (HTML/CSS Only) -------------------- -->
+  <div class="sunflower-field">
+    <!-- Sunflowers are defined statically with inline positions and animation delays -->
+    <div class="sunflower" style="left: 10%; animation-delay: 0s;">
+      <div class="stem"></div>
+      <div class="sunflower-head">
+        <div class="petal p1"></div>
+        <div class="petal p2"></div>
+        <div class="petal p3"></div>
+        <div class="petal p4"></div>
+        <div class="center"></div>
+      </div>
+    </div>
+    <div class="sunflower" style="left: 30%; animation-delay: 0.5s;">
+      <div class="stem"></div>
+      <div class="sunflower-head">
+        <div class="petal p1"></div>
+        <div class="petal p2"></div>
+        <div class="petal p3"></div>
+        <div class="petal p4"></div>
+        <div class="center"></div>
+      </div>
+    </div>
+    <div class="sunflower" style="left: 50%; animation-delay: 1s;">
+      <div class="stem"></div>
+      <div class="sunflower-head">
+        <div class="petal p1"></div>
+        <div class="petal p2"></div>
+        <div class="petal p3"></div>
+        <div class="petal p4"></div>
+        <div class="center"></div>
+      </div>
+    </div>
+    <div class="sunflower" style="left: 70%; animation-delay: 0.8s;">
+      <div class="stem"></div>
+      <div class="sunflower-head">
+        <div class="petal p1"></div>
+        <div class="petal p2"></div>
+        <div class="petal p3"></div>
+        <div class="petal p4"></div>
+        <div class="center"></div>
+      </div>
+    </div>
+    <div class="sunflower" style="left: 90%; animation-delay: 1.2s;">
+      <div class="stem"></div>
+      <div class="sunflower-head">
+        <div class="petal p1"></div>
+        <div class="petal p2"></div>
+        <div class="petal p3"></div>
+        <div class="petal p4"></div>
+        <div class="center"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
